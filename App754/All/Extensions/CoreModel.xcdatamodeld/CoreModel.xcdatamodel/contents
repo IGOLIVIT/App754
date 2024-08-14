@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23B74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CatModel" representedClassName="CatModel" syncable="YES" codeGenerationType="class">
+        <attribute name="catName" optional="YES" attributeType="String"/>
+        <attribute name="catPhoto" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="HistoryModel" representedClassName="HistoryModel" syncable="YES" codeGenerationType="class">
+        <attribute name="hisCart" optional="YES" attributeType="String"/>
+        <attribute name="hisCartPhoto" optional="YES" attributeType="String"/>
+        <attribute name="hisComments" optional="YES" attributeType="String"/>
+        <attribute name="hisDate" optional="YES" attributeType="String"/>
+        <attribute name="hisDescr" optional="YES" attributeType="String"/>
+        <attribute name="hisLikes" optional="YES" attributeType="String"/>
+        <attribute name="hisName" optional="YES" attributeType="String"/>
+        <attribute name="hisViews" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="NotesModel" representedClassName="NotesModel" syncable="YES" codeGenerationType="class">
+        <attribute name="notDate" optional="YES" attributeType="String"/>
+        <attribute name="notDescr" optional="YES" attributeType="String"/>
+        <attribute name="notName" optional="YES" attributeType="String"/>
+    </entity>
+</model>
